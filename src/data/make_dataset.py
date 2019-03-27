@@ -10,6 +10,7 @@ def extract_tar(tar_path, out_path):
     if not os.path.isdir(os.path.join(out_path, 'images')):
         assert os.path.isfile(tar_path)
         tarfile.open(tar_path).extractall(path=out_path)
+        os.rmdir(os.path.join(out_path, 'images', 'Train Directory', 'Predicted'))
         return 0
 
 def main(args):
