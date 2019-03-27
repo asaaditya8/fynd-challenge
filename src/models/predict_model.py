@@ -15,7 +15,7 @@ def main():
               os.walk(os.path.abspath('data/raw/images/Train Directory')) for name in files]
 
     data = ImageDataBunch.from_name_func(path=path, fnames=fnames, label_func=lambda x: x.split('/')[-2],
-                                         valid_pct=0.6, test=testpath, ds_tfms=tfms)
+                                         valid_pct=0.6, test=testpath, ds_tfms=(tfms, []))
 
     print(data.classes)
 
