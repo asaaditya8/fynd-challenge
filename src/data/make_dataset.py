@@ -5,8 +5,10 @@ import os
 PATH = "data/raw/images.tar.gz"
 
 def extract_tar(tar_path, out_path):
-    if os.path.isdir(out_path):
-        assert os.path.exists(tar_path)
+    tar_path, out_path = map(os.path.abspath, (tar_path, out_path))
+
+    if not os.path.isdir(os.path.join(out_path, 'images')):
+        assert os.path.isfile(tar_path)
         tarfile.open(tar_path).extractall(path=out_path)
         return 0
 
