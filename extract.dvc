@@ -1,0 +1,13 @@
+cmd: python src/data/make_dataset.py data/raw/images.tar.gz data/raw/
+deps:
+- md5: 6ec98e0e29dd65ef27b2f396935661ec
+  path: src/data/make_dataset.py
+- md5: cd23a61607dfa0bc13f1af1546324842
+  path: data/raw/images.tar.gz
+md5: 94d5a4f5cf5dad901d61d6cd7b1f7dbf
+outs:
+- cache: true
+  md5: 89bbedcfd2460c159229be6df82a17a1.dir
+  metric: false
+  path: data/raw/images
+wdir: .
