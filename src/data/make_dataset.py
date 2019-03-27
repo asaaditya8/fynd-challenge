@@ -6,7 +6,9 @@ PATH = "data/raw/images.tar.gz"
 
 def extract_tar(tar_path, out_path):
     if os.path.isdir(out_path):
+        assert os.path.exists(tar_path)
         tarfile.open(tar_path).extractall(path=out_path)
+        return 0
 
 def main(args):
     extract_tar(args.tarInput, args.tarOutput)
