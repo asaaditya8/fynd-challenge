@@ -4,7 +4,7 @@ import os
 import shutil
 import numpy as np
 from sklearn.model_selection import train_test_split
-from torchvision.transforms import CenterCrop
+from torchvision.transforms import CenterCrop, Resize, Compose
 from PIL import Image
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
@@ -28,7 +28,7 @@ def extract_tar(tar_path, out_path):
         return 0
 
 
-def split_folder(path, val_num:int = 100, test_size:float = 0.2, shuffle:bool = True, stratify:bool = True,
+def split_folder(path, outdir, val_num:int = 100, test_size:float = 0.2, shuffle:bool = True, stratify:bool = True,
                random_state:int = None):
     """
     To create folders for image loader and also to process images
@@ -70,7 +70,7 @@ def split_folder(path, val_num:int = 100, test_size:float = 0.2, shuffle:bool = 
     var_dict = {'train': train_names, 'valid': valid_names, 'test': test_names}
 
     for f in tqdm(var_dict):
-        folder = os.path.join(os.path.abspath('data'), 'processed', f)
+        folder = os.path.join(os.path.abspath(outdir), f)
         if not os.path.isdir(folder):
             os.mkdir(folder)
 
@@ -81,29 +81,38 @@ def split_folder(path, val_num:int = 100, test_size:float = 0.2, shuffle:bool = 
 
 
 def process_image(path, dst):
+    """
+    Centre crop and resize
+    :param path: input image path
+    :param dst: output directory
+    :return: None
+    """
     # shutil.copy(path, dst)
 
-    transform = CenterCrop(224)
-    img = Image.open(path)
+    transform = Compose([CenterCrop(299),
+                         Resize(224)])
+    img = Image.open(os.path.abspath(path))
     img = transform(img)
 
-    out_path = os.path.join(dst, os.path.basename(path))
+    out_path = os.path.join(os.path.abspath(dst), os.path.basename(path))
     img.save(out_path)
 
 
 def main(args):
     if args.tarInput:
-        if args.tarOutput:
-            extract_tar(args.tarInput, args.tarOutput)
+        assert args.tarOutput is not None
+        extract_tar(args.tarInput, args.tarOutput)
 
     if args.image_dir:
-        split_folder(args.image_dir, test_size=0.6, random_state=42)
+        assert args.output_dir is not None
+        split_folder(args.image_dir, args.output_dir, test_size=0.6, random_state=42)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract and process dataset')
     parser.add_argument('--tarInput', type=str, help='path for tar file')
-    parser.add_argument('--tarOutput', type=str, help='path for output')
-    parser.add_argument('--image_dir', type=str, help='image folder')
+    parser.add_argument('--tarOutput', type=str, help='path for tar output')
+    parser.add_argument('--image_dir', type=str, help='input dataset folder')
+    parser.add_argument('--output_dir', type=str, help='output dataset folder')
 
     args = parser.parse_args()
 
