@@ -6,4 +6,4 @@ def test_extract():
 
 def test_process_img():
     make_dataset.process_image('data/external/65945.jpg', 'data/processed')
-    assert os.path.isfile('data/processed/65945.jpg')
+    assert os.path.isfile('data/processed/external/65945.jpg')
