@@ -76,7 +76,7 @@ def split_folder(path, val_num:int = 100, test_size:float = 0.2, shuffle:bool = 
 
         _process_image = partial(process_image(dst=folder))
 
-        with ThreadPoolExecutor(max_workers=4) as exec:
+        with ThreadPoolExecutor(max_workers=6) as exec:
             result = exec.map(_process_image, var_dict[f])
 
 
