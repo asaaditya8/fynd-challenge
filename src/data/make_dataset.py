@@ -28,11 +28,11 @@ def extract_tar(tar_path, out_path):
         return 0
 
 
-def split_folder(path, outdir, val_num:int = 100, test_size:float = 0.2, shuffle:bool = True, stratify:bool = True,
-               random_state:int = None):
+def split_folder(imgdir, outdir, val_num:int = 100, test_size:float = 0.2, shuffle:bool = True, stratify:bool = True,
+                 random_state:int = None):
     """
     To create folders for image loader and also to process images
-    :param path: path of train directory
+    :param imgdir: path of train directory
     :param val_num: number of validation images
     :param test_size: test fraction
     :param shuffle:
@@ -41,8 +41,8 @@ def split_folder(path, outdir, val_num:int = 100, test_size:float = 0.2, shuffle
     :return: None
     """
     #valid is subset of test
-    all_img_filenames = np.array([os.path.join(path_, name) for path_, subdirs, files in
-                                  os.walk(os.path.abspath(path)) for name in files])
+    all_img_filenames = np.array([os.path.join(path, name) for path, subdirs, files in
+                                  os.walk(os.path.abspath(imgdir)) for name in files])
 
     print(len(all_img_filenames), 'images found.')
 
@@ -74,7 +74,7 @@ def split_folder(path, outdir, val_num:int = 100, test_size:float = 0.2, shuffle
         if not os.path.isdir(folder):
             os.mkdir(folder)
 
-        _process_image = partial(process_image(dst=folder))
+        _process_image = partial(process_image, dst=folder)
 
         with ThreadPoolExecutor(max_workers=6) as exec:
             result = exec.map(_process_image, var_dict[f])
