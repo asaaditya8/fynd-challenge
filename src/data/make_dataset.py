@@ -44,7 +44,9 @@ def split_folder(imgdir, outdir, val_num:int = 100, test_size:float = 0.2, shuff
     all_img_filenames = np.array([os.path.join(path, name) for path, subdirs, files in
                                   os.walk(os.path.abspath(imgdir)) for name in files])
 
-    print(len(all_img_filenames), 'images found belonging to', len(os.listdir(imgdir)), 'classes.')
+    labels = os.listdir(imgdir)
+
+    print(len(all_img_filenames), 'images found belonging to', len(labels), 'classes.')
 
     if stratify:
         label_fn = lambda x: x.split('/')[-2]
@@ -76,6 +78,11 @@ def split_folder(imgdir, outdir, val_num:int = 100, test_size:float = 0.2, shuff
         if not os.path.isdir(folder):
             os.mkdir(folder)
 
+        for label in labels:
+            cls_dir = os.path.join(folder, label)
+            if not os.path.isdir(cls_dir):
+                os.mkdir(cls_dir)
+
         _process_image = partial(process_image, dst=folder)
 
         with ThreadPoolExecutor(max_workers=6) as exec:
@@ -96,7 +103,7 @@ def process_image(path, dst):
     img = Image.open(os.path.abspath(path))
     img = transform(img)
 
-    out_path = os.path.join(os.path.abspath(dst), os.path.basename(path))
+    out_path = os.path.join(os.path.abspath(dst), '/'.join(path.split('/')[-2:]))
     img.save(out_path)
 
 
