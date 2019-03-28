@@ -4,10 +4,21 @@ import os
 import shutil
 import numpy as np
 from sklearn.model_selection import train_test_split
+from torchvision.transforms import CenterCrop
+from PIL import Image
+from concurrent.futures import ThreadPoolExecutor
+from functools import partial
+from tqdm import tqdm
 
 PATH = "data/raw/images.tar.gz"
 
 def extract_tar(tar_path, out_path):
+    """
+    To extract the compressed dataset
+    :param tar_path: path for the compressed file
+    :param out_path: path for the output directory
+    :return: 0 if successfull else None
+    """
     tar_path, out_path = map(os.path.abspath, (tar_path, out_path))
 
     if not os.path.isdir(os.path.join(out_path, 'images')):
@@ -19,6 +30,16 @@ def extract_tar(tar_path, out_path):
 
 def split_folder(path, val_num:int = 100, test_size:float = 0.2, shuffle:bool = True, stratify:bool = True,
                random_state:int = None):
+    """
+    To create folders for image loader and also to process images
+    :param path: path of train directory
+    :param val_num: number of validation images
+    :param test_size: test fraction
+    :param shuffle:
+    :param stratify: to maintain class ratio
+    :param random_state:
+    :return: None
+    """
     #valid is subset of test
     all_img_filenames = np.array([os.path.join(path_, name) for path_, subdirs, files in
                                   os.walk(os.path.abspath(path)) for name in files])
@@ -48,17 +69,26 @@ def split_folder(path, val_num:int = 100, test_size:float = 0.2, shuffle:bool = 
 
     var_dict = {'train': train_names, 'valid': valid_names, 'test': test_names}
 
-    for f in var_dict:
+    for f in tqdm(var_dict):
         folder = os.path.join(os.path.abspath('data'), 'processed', f)
         if not os.path.isdir(folder):
             os.mkdir(folder)
 
-        for fpath in var_dict[f]:
-            process_image(fpath, folder)
+        _process_image = partial(process_image(dst=folder))
+
+        with ThreadPoolExecutor(max_workers=4) as exec:
+            result = exec.map(_process_image, var_dict[f])
 
 
 def process_image(path, dst):
-    shutil.copy(path, dst)
+    # shutil.copy(path, dst)
+
+    transform = CenterCrop(224)
+    img = Image.open(path)
+    img = transform(img)
+
+    out_path = os.path.join(dst, os.path.basename(path))
+    img.save(out_path)
 
 
 def main(args):
