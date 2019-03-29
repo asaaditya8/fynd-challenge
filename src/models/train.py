@@ -6,9 +6,10 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger
 from kerasonecycle.clr import OneCycleLR, LRFinder
 from .model import create_model
 from ..data.loader import get_data, BATCH_SIZE
+from ..data.make_dataset import TEST_SIZE, N_VAL
 
 MAX_LR = 0.1
-N_SAMPLES = 1348
+N_SAMPLES = int(3370 * (1 - TEST_SIZE))
 num_samples = (N_SAMPLES // BATCH_SIZE) * BATCH_SIZE
 
 class Learner:
@@ -34,7 +35,9 @@ class Learner:
 
         # Ensure that number of epochs = 1 when calling fit()
         self.model.fit_generator(self.gen_dict['train'], steps_per_epoch=N_SAMPLES // BATCH_SIZE, epochs=1,
-                                 batch_size=BATCH_SIZE, callbacks=[lr_callback])
+                                 batch_size=BATCH_SIZE, callbacks=[lr_callback],
+                                 validation_data=self.gen_dict['valid'],
+                                 validation_steps=N_VAL // BATCH_SIZE)
 
         lr_callback.plot_schedule(clip_beginning=10, clip_endding=5)
 

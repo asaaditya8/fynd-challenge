@@ -11,6 +11,8 @@ from functools import partial
 from tqdm import tqdm
 
 PATH = "data/raw/images.tar.gz"
+TEST_SIZE = 0.6
+N_VAL = 100
 
 def extract_tar(tar_path, out_path):
     """
@@ -114,7 +116,7 @@ def main(args):
 
     if args.image_dir:
         assert args.output_dir is not None
-        split_folder(args.image_dir, args.output_dir, test_size=0.6, random_state=42)
+        split_folder(args.image_dir, args.output_dir, val_num=N_VAL, test_size=TEST_SIZE, random_state=42)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract and process dataset')
