@@ -3,7 +3,12 @@ from keras.applications.resnet50 import ResNet50, preprocess_input
 from keras import layers
 from keras.models import Model, Sequential
 
-def create_top(num_classes):
+def create_top(num_classes:int):
+    """
+    Creates fastai style top
+    :param num_classes: Number of classes
+    :return: Top model
+    """
     top = Sequential([
         layers.BatchNormalization(input_shape=(2048*2,)),
         layers.Dropout(0.5),
