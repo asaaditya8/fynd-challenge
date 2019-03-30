@@ -36,8 +36,8 @@ def evaluate(data_dir, model_ckpt, output_path):
             y_test.append( y_batch )
             y_pred.append( model.predict_on_batch(x_batch) )
 
-        y_pred = np.stack(y_pred).argmax(axis=-1)
-        y_test = np.stack(y_test).argmax(axis=-1)
+        y_pred = np.concatenate(y_pred, axis=0).argmax(axis=-1)
+        y_test = np.concatenate(y_test, axis=0).argmax(axis=-1)
 
         print('y_pred', y_pred[:5])
         print('y_test', y_test[:5])
