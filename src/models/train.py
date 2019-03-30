@@ -38,9 +38,7 @@ class Learner:
 
         # Ensure that number of epochs = 1 when calling fit()
         self.model.fit_generator(self.gen_dict['train'], steps_per_epoch=N_SAMPLES // BATCH_SIZE, epochs=1,
-                                 batch_size=BATCH_SIZE, callbacks=[lr_callback],
-                                 validation_data=self.gen_dict['valid'],
-                                 validation_steps=N_VAL // BATCH_SIZE)
+                                 callbacks=[lr_callback])
 
         lr_callback.plot_schedule(clip_beginning=10, clip_endding=5)
 
@@ -59,7 +57,9 @@ class Learner:
         logger = CSVLogger(os.path.abspath(log_path))
 
         self.model.fit_generator(self.gen_dict['train'], steps_per_epoch=N_SAMPLES // BATCH_SIZE, epochs=epochs,
-                                 batch_size=BATCH_SIZE, callbacks=[lr_manager, es, ckpt, logger])
+                                 callbacks=[lr_manager, es, ckpt, logger],
+                                 validation_data=self.gen_dict['valid'],
+                                 validation_steps=N_VAL // BATCH_SIZE)
 
 
 def main(args):
