@@ -1,14 +1,14 @@
-cmd: python src/data/make_dataset.py --image_dir "data/raw/images/Train Directory"
-  --output_dir data/processed/
+cmd: python data/make_dataset.py --image_dir "../data/raw/images/Train Directory"
+  --output_dir ../data/processed/
 deps:
 - md5: 58d48fc04d021ed44f57b1b03b294b52
-  path: src/data/make_dataset.py
+  path: data/make_dataset.py
 - md5: 4d80e0d0689f55881aacd60c4f42eeb3.dir
-  path: data/raw/images/Train Directory
+  path: ../data/raw/images/Train Directory
 md5: 50643f793415a01aefb8c735d22052c8
 outs:
 - cache: true
   md5: 6d4a9e30ed9516f6c7506ccc8825e545.dir
   metric: false
-  path: data/processed
+  path: ../data/processed
 wdir: .
