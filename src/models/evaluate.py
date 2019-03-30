@@ -1,9 +1,11 @@
+import sys
+sys.path.append("..")
+
 import argparse
 import os
-
 from keras.models import load_model
-from ..data.loader import BATCH_SIZE, get_data
-from ..data.make_dataset import TEST_SIZE
+from src.data.loader import BATCH_SIZE, get_data
+from src.data.make_dataset import TEST_SIZE
 import numpy as np
 import json
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score, log_loss
