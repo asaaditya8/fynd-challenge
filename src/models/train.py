@@ -77,7 +77,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Train model')
     parser.add_argument('data_dir', type=str, help='path for dataset')
     parser.add_argument('--lr_dir', type=str, help='path for lr result')
-    parser.add_argument('--epochs', type=int, help='number of epochs to train', default=10)
+    parser.add_argument('--epochs', type=int, help='number of epochs to train')
     parser.add_argument('--ckpt_path', type=str, help='path for lr result')
     parser.add_argument('--log_path', type=str, help='path for lr result')
 
