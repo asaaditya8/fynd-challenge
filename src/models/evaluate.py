@@ -8,6 +8,7 @@ from src.data.loader import BATCH_SIZE, get_data
 from src.data.make_dataset import TEST_SIZE
 import numpy as np
 import json
+from tqdm import tqdm
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score, log_loss
 
 N_SAMPLES = {
@@ -30,7 +31,7 @@ def evaluate(data_dir, model_ckpt, output_path):
         y_test = []
 
         # For obtaining y_true manual iteration is needed
-        for i in range(N_SAMPLES[c] // BATCH_SIZE):
+        for i in tqdm(range(N_SAMPLES[c] // BATCH_SIZE)):
             x_batch, y_batch = next(gen_dict[c])
             y_test.append( y_batch )
             y_pred.append( model.predict_on_batch(x_batch) )
