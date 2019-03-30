@@ -36,17 +36,17 @@ def evaluate(data_dir, model_ckpt, output_path):
             y_test.append( y_batch )
             y_pred.append( model.predict_on_batch(x_batch) )
 
-        y_pred = np.concatenate(y_pred, axis=0).argmax(axis=-1)
-        y_test = np.concatenate(y_test, axis=0).argmax(axis=-1)
+        y_pred = np.concatenate(y_pred, axis=0)
+        y_test = np.concatenate(y_test, axis=0)
 
         print('y_pred', y_pred[:5])
         print('y_test', y_test[:5])
 
         # 'average' means 'class average', it handles class imbalance
-        metrics[c + '_accuracy'] = accuracy_score(y_test, y_pred),
-        metrics[c + '_f1-score'] = f1_score(y_test, y_pred, average='weighted'),
+        metrics[c + '_accuracy'] = accuracy_score(y_test.argmax(axis=-1), y_pred.argmax(axis=-1)),
+        metrics[c + '_f1-score'] = f1_score(y_test.argmax(axis=-1), y_pred.argmax(axis=-1), average='weighted'),
         metrics[c + '_roc-auc-score'] = roc_auc_score(y_test, y_pred, average='weighted'),
-        metrics[c + '_log-loss'] = log_loss(y_test, y_pred)
+        metrics[c + '_log-loss'] = log_loss(y_test.argmax(axis=-1), y_pred)
 
     # Output json will be tracked by version control
     with open(os.path.abspath(output_path), 'w') as f:
