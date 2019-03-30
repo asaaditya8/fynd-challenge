@@ -46,7 +46,6 @@ def evaluate(data_dir, model_ckpt, output_path):
     with open(os.path.abspath(output_path), 'w') as f:
         json.dump(metrics, f)
 
-
 def main(args):
     evaluate(args.data_dir, args.ckpt_path, args.metric_path)
 
