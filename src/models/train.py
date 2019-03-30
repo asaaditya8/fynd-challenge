@@ -6,9 +6,9 @@ import os
 from keras.optimizers import SGD
 from keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger
 from model import create_model
-from ..data.make_dataset import TEST_SIZE, N_VAL
-from ..data.loader import get_data, BATCH_SIZE
-from ..kerasonecycle.clr import OneCycleLR, LRFinder
+from src.data.make_dataset import TEST_SIZE, N_VAL
+from src.data.loader import get_data, BATCH_SIZE
+from src.kerasonecycle.clr import OneCycleLR, LRFinder
 
 PATIENCE = 4
 MAX_LR = 0.1
