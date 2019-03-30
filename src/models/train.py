@@ -11,7 +11,7 @@ from src.data.loader import get_data, BATCH_SIZE
 from src.kerasonecycle.clr import OneCycleLR, LRFinder
 
 PATIENCE = 4
-MAX_LR = 0.1
+MAX_LR = 0.025
 N_SAMPLES = int(3370 * (1 - TEST_SIZE))
 num_samples = (N_SAMPLES // BATCH_SIZE) * BATCH_SIZE
 
@@ -41,6 +41,9 @@ class Learner:
                                  callbacks=[lr_callback])
 
         lr_callback.plot_schedule(clip_beginning=10, clip_endding=5)
+
+        # use this to plot manually if the above fails
+        # LRFinder.plot_schedule_from_file('../reports/figures', clip_beginning=10, clip_endding=5)
 
     def fit(self, ckpt_path, log_path, epochs=10):
         """
