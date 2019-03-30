@@ -24,7 +24,6 @@ class Learner:
 
     def set_base_trainable(self, trainable:bool = False):
         self.model.layers[1].trainable = trainable
-        self.model.layers[-1].trainable = trainable
         self.model.compile(SGD(), 'categorical_crossentropy', ['accuracy'])
 
     def find_lr(self, lr_dir):
