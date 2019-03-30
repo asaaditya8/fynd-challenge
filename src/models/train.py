@@ -1,7 +1,7 @@
 import argparse
 import os
 import sys
-sys.path.append("..")
+sys.path.append(".")
 
 from keras.optimizers import SGD
 from keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger
