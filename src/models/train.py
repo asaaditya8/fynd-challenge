@@ -3,7 +3,7 @@ import os
 
 from keras.optimizers import SGD
 from keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger
-from ..kerasonecycle.clr import OneCycleLR, LRFinder
+from src.kerasonecycle.clr import OneCycleLR, LRFinder
 from .model import create_model
 from ..data.loader import get_data, BATCH_SIZE
 from ..data.make_dataset import TEST_SIZE, N_VAL
