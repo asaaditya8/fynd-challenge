@@ -39,9 +39,6 @@ def evaluate(data_dir, model_ckpt, output_path):
         y_pred = np.concatenate(y_pred, axis=0)
         y_test = np.concatenate(y_test, axis=0)
 
-        print('y_pred', y_pred[:5])
-        print('y_test', y_test[:5])
-
         # 'average' means 'class average', it handles class imbalance
         metrics[c + '_accuracy'] = accuracy_score(y_test.argmax(axis=-1), y_pred.argmax(axis=-1)),
         metrics[c + '_f1-score'] = f1_score(y_test.argmax(axis=-1), y_pred.argmax(axis=-1), average='weighted'),
