@@ -54,7 +54,7 @@ class Learner:
         :return: None
         """
         #Set MAX_LR by running find_lr
-        lr_manager = OneCycleLR(MAX_LR)
+        lr_manager = OneCycleLR(num_samples, epochs, BATCH_SIZE, MAX_LR)
         es = EarlyStopping(patience=PATIENCE)
         ckpt = ModelCheckpoint(os.path.abspath(ckpt_path), save_best_only=True)
         logger = CSVLogger(os.path.abspath(log_path))
