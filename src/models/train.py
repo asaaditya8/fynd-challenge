@@ -20,6 +20,7 @@ class Learner:
         self.gen_dict = gen_dict
         self.model = model
         self.set_base_trainable(trainable)
+        print(self.model.summary())
 
     def set_base_trainable(self, trainable:bool = False):
         self.model.layers[0].trainable = trainable
