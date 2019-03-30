@@ -33,6 +33,7 @@ def create_model(weights = 'imagenet'):
 
     return Model(inp, x)
 
+
 def main():
     pass
 

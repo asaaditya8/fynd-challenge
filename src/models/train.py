@@ -8,6 +8,7 @@ from .model import create_model
 from ..data.loader import get_data, BATCH_SIZE
 from ..data.make_dataset import TEST_SIZE, N_VAL
 
+PATIENCE = 4
 MAX_LR = 0.1
 N_SAMPLES = int(3370 * (1 - TEST_SIZE))
 num_samples = (N_SAMPLES // BATCH_SIZE) * BATCH_SIZE
@@ -51,11 +52,12 @@ class Learner:
         """
         #Set MAX_LR by running find_lr
         lr_manager = OneCycleLR(MAX_LR)
+        es = EarlyStopping(patience=PATIENCE)
         ckpt = ModelCheckpoint(os.path.abspath(ckpt_path), save_best_only=True)
         logger = CSVLogger(os.path.abspath(log_path))
 
         self.model.fit_generator(self.gen_dict['train'], steps_per_epoch=N_SAMPLES // BATCH_SIZE, epochs=epochs,
-                                 batch_size=BATCH_SIZE, callbacks=[lr_manager, ckpt, logger])
+                                 batch_size=BATCH_SIZE, callbacks=[lr_manager, es, ckpt, logger])
 
 
 def main(args):
