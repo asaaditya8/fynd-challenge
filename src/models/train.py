@@ -42,6 +42,9 @@ class Learner:
 
         lr_callback.plot_schedule(clip_beginning=10, clip_endding=5)
 
+        # use this to plot manually if the above fails
+        # LRFinder.plot_schedule_from_file('../reports/figures', clip_beginning=10, clip_endding=5)
+
     def fit(self, ckpt_path, log_path, epochs=10):
         """
         Model versioning will be done by dvc so provide a trivial name for checkpoint and log
