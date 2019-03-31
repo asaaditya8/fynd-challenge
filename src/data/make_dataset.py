@@ -75,13 +75,20 @@ def split_folder(imgdir, outdir, val_num:int = 100, test_size:float = 0.2, shuff
 
     for v in var_dict: print(len(var_dict[v]), v, 'images')
 
+    # checking for processed folder
+    outdir = os.path.abspath(outdir)
+    if not os.path.isdir(outdir):
+        os.mkdir(outdir)
+
     for f in tqdm(var_dict):
-        folder = os.path.join(os.path.abspath(outdir), f)
+        # creating train valid test folders
+        folder = os.path.join(outdir, f)
         if not os.path.isdir(folder):
             os.mkdir(folder)
 
         for label in labels:
             cls_dir = os.path.join(folder, label)
+            # creating label folders
             if not os.path.isdir(cls_dir):
                 os.mkdir(cls_dir)
 
