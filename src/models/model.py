@@ -1,5 +1,5 @@
 import keras
-from keras.applications.resnet50 import ResNet50, preprocess_input
+from keras.applications.xception import Xception, preprocess_input
 from keras import layers
 from keras.models import Model, Sequential
 
@@ -10,8 +10,7 @@ def create_top(num_classes:int):
     :return: Top model
     """
     top = Sequential([
-        layers.BatchNormalization(input_shape=(2048*2,)),
-        layers.Dropout(0.5),
+        layers.Dropout(0.5, input_shape=(2048*2,)),
         layers.Dense(512, use_bias=False),
         layers.Activation('relu'),
         layers.BatchNormalization(),
@@ -24,7 +23,7 @@ def create_top(num_classes:int):
 
 
 def create_model(weights = 'imagenet'):
-    base = ResNet50(include_top=False, weights=weights, pooling=None)
+    base = Xception(include_top=False, weights=weights, pooling=None)
     top = create_top(12)
     inp = layers.Input((None, None, 3))
     x = base(inp)

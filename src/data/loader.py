@@ -2,7 +2,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.applications.resnet50 import preprocess_input
 import os
 
-BATCH_SIZE = 32
+BATCH_SIZE = 16
 
 def get_data(inp_dir):
     var_list = ('train', 'valid', 'test')

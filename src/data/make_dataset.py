@@ -11,7 +11,7 @@ from functools import partial
 from tqdm import tqdm
 
 PATH = "data/raw/images.tar.gz"
-TEST_SIZE = 0.4
+TEST_SIZE = 0.2
 N_VAL = 100
 
 def extract_tar(tar_path, out_path):
