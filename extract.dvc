@@ -10,4 +10,4 @@ outs:
   md5: 89bbedcfd2460c159229be6df82a17a1.dir
   metric: false
   path: ../data/raw/images
-wdir: .
+wdir: src

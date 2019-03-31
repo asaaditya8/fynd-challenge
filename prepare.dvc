@@ -11,4 +11,4 @@ outs:
   md5: 6d4a9e30ed9516f6c7506ccc8825e545.dir
   metric: false
   path: ../data/processed
-wdir: .
+wdir: src
