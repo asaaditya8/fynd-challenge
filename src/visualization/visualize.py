@@ -16,7 +16,7 @@ def add_metric_tocsv(csv_path, metric_path):
 
     if os.path.isfile(csv_path):
         df = pd.read_csv(csv_path)
-        df.append(result, ignore_index=True)
+        df = df.append(result, ignore_index=True)
     else:
         df = pd.DataFrame(result, index=[0])
     df.to_csv(csv_path, index=False)
