@@ -1,5 +1,6 @@
 import json
 import pandas as pd
+import os
 
 def add_metric_tocsv(csv_path, metric_path):
     with open(metric_path, 'r') as f:
@@ -13,6 +14,9 @@ def add_metric_tocsv(csv_path, metric_path):
         else:
             result[k] = v[0]
 
-    df = pd.read_csv(csv_path)
-    df.append(result, ignore_index=True)
+    if os.path.isfile(csv_path):
+        df = pd.read_csv(csv_path)
+        df.append(result, ignore_index=True)
+    else:
+        df = pd.DataFrame(result, index=[0])
     df.to_csv(csv_path, index=False)
