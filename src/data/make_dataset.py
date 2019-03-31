@@ -76,7 +76,7 @@ def split_folder(imgdir, outdir, val_num:int = 100, test_size:float = 0.2, shuff
     for v in var_dict: print(len(var_dict[v]), v, 'images')
 
     for f in tqdm(var_dict):
-        folder = os.path.join(os.path.abspath(outdir), f)
+        folder = os.path.join(outdir, f)
         if not os.path.isdir(folder):
             os.mkdir(folder)
 
