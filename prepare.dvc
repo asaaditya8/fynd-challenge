@@ -5,6 +5,7 @@ deps:
   path: data/make_dataset.py
 - md5: 4d80e0d0689f55881aacd60c4f42eeb3.dir
   path: ../data/raw/images/Train Directory
+locked: true
 md5: c9bad1a606cba0dd3112b138281ed84e
 outs:
 - cache: true

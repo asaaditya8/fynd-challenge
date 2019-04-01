@@ -1,19 +1,19 @@
 cmd: python models/train.py ../data/processed/ --epochs 10 --ckpt_path ../models/model.h5
   --log_path ../reports/logs/train_log.csv
 deps:
-- md5: 8e45f3854f939ba48b005213a1879e4a
+- md5: d2a691efdc9d35071ecb5ad81cff3a3c
   path: models/train.py
-- md5: 94b9134410de71b2da2880683ec6ca16.dir
+- md5: a035b295e9ad96878a6a5198f62f95c2.dir
   path: ../data/processed
-md5: 54c52289703a491f48e0b6b3dafc70b7
+md5: d193f2f47a28d9bbe3d81bd1332cb90a
 outs:
 - cache: true
-  md5: 8d4bdeea135bb4185be155719f6a1f51
+  md5: 06f62e865ef8cf045d63ad1e1053ef7a
   metric: false
   path: ../models/model.h5
   persist: false
 - cache: true
-  md5: 40994ae732b702a9de5dd43343f31ac5
+  md5: 94c6e2aed8d4732260acef50b69667b4
   metric: false
   path: ../reports/logs/train_log.csv
   persist: false
