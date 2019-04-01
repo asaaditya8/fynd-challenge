@@ -23,7 +23,8 @@ class Learner:
         print(self.model.summary())
 
     def set_base_trainable(self, trainable:bool = False):
-        for l in self.model.layers[:-1]: l.trainable = trainable
+        for l in self.model.layers[:6]: l.trainable = False
+        for l in self.model.layers[6:-1]: l.trainable = trainable
         self.model.compile(SGD(), 'categorical_crossentropy', ['accuracy'])
 
     def find_lr(self, lr_dir):

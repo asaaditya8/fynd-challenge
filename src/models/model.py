@@ -10,12 +10,14 @@ def create_top(num_classes:int):
     :return: Top model
     """
     top = Sequential([
+        layers.BatchNormalization(),
         layers.Dense(512, use_bias=False, input_shape=(64+128+256+512+512,)),
         layers.Activation('relu'),
         layers.BatchNormalization(),
         layers.Dropout(0.5),
         layers.Dense(512, use_bias=False),
         layers.Activation('relu'),
+        layers.BatchNormalization(),
         layers.Dense(num_classes, activation='softmax', use_bias=False)
         ])
     return top
