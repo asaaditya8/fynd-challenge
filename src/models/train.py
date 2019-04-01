@@ -15,6 +15,7 @@ MAX_LR = 0.01
 N_SAMPLES = int(3370 * (1 - TEST_SIZE))
 num_samples = (N_SAMPLES // BATCH_SIZE) * BATCH_SIZE
 
+
 class Learner:
     def __init__(self, gen_dict, model, trainable:bool = False):
         self.gen_dict = gen_dict
