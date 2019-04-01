@@ -17,7 +17,7 @@ num_samples = (N_SAMPLES // BATCH_SIZE) * BATCH_SIZE
 
 
 class Learner:
-    def __init__(self, gen_dict, model, trainable:bool = False):
+    def __init__(self, gen_dict, model, trainable:bool = True):
         self.gen_dict = gen_dict
         self.model = model
         self.set_base_trainable(trainable)
