@@ -1,5 +1,5 @@
 from keras.preprocessing.image import ImageDataGenerator
-from keras.applications.vgg19 import preprocess_input
+from keras.applications.xception import preprocess_input
 import os
 
 BATCH_SIZE = 16

@@ -1,4 +1,4 @@
-cmd: python models/train.py ../data/processed/ --epochs 30 --ckpt_path ../models/model.h5
+cmd: python models/train.py ../data/processed/ --epochs 10 --ckpt_path ../models/model.h5
   --log_path ../reports/logs/train_log.csv
 deps:
 - md5: e8fed1907778c0bdd9f47600a86e0d15

@@ -17,15 +17,15 @@ num_samples = (N_SAMPLES // BATCH_SIZE) * BATCH_SIZE
 
 
 class Learner:
-    def __init__(self, gen_dict, model, trainable:bool = True):
+    def __init__(self, gen_dict, model, trainable:bool = False):
         self.gen_dict = gen_dict
         self.model = model
         self.set_base_trainable(trainable)
         print(self.model.summary())
 
     def set_base_trainable(self, trainable:bool = False):
-        for l in self.model.layers[:6]: l.trainable = False
-        for l in self.model.layers[6:-1]: l.trainable = trainable
+        # for l in self.model.layers[:6]: l.trainable = False
+        for l in self.model.layers[:-1]: l.trainable = trainable
         self.model.compile(SGD(), 'categorical_crossentropy', ['accuracy'])
 
     def find_lr(self, lr_dir):
