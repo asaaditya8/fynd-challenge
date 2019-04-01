@@ -23,7 +23,7 @@ class Learner:
         print(self.model.summary())
 
     def set_base_trainable(self, trainable:bool = False):
-        self.model.layers[1].trainable = trainable
+        for l in self.model.layers[:-1]: l.trainable = trainable
         self.model.compile(SGD(), 'categorical_crossentropy', ['accuracy'])
 
     def find_lr(self, lr_dir):
@@ -59,7 +59,7 @@ class Learner:
         ckpt = ModelCheckpoint(os.path.abspath(ckpt_path), save_best_only=True)
         logger = CSVLogger(os.path.abspath(log_path))
 
-        self.model.fit_generator(self.gen_dict['train'], steps_per_epoch=N_SAMPLES // BATCH_SIZE, epochs=1,
+        self.model.fit_generator(self.gen_dict['train'], steps_per_epoch=N_SAMPLES // BATCH_SIZE, epochs=2,
                                  callbacks=[lr_manager, es, ckpt, logger],
                                  validation_data=self.gen_dict['valid'],
                                  validation_steps=N_VAL // BATCH_SIZE)

@@ -1,5 +1,5 @@
 import keras
-from keras.applications.xception import Xception, preprocess_input
+from keras.applications.vgg19 import VGG19
 from keras import layers
 from keras.models import Model, Sequential
 
@@ -10,8 +10,7 @@ def create_top(num_classes:int):
     :return: Top model
     """
     top = Sequential([
-        layers.Dropout(0.5, input_shape=(2048*2,)),
-        layers.Dense(512, use_bias=False),
+        layers.Dense(512, use_bias=False, input_shape=(64+128+256+512+512,)),
         layers.Activation('relu'),
         layers.BatchNormalization(),
         layers.Dropout(0.5),
@@ -23,14 +22,18 @@ def create_top(num_classes:int):
 
 
 def create_model(weights = 'imagenet'):
-    base = Xception(include_top=False, weights=weights, pooling=None)
+    base = VGG19(include_top=False, weights=weights, pooling=None)
     top = create_top(12)
-    inp = layers.Input((None, None, 3))
-    x = base(inp)
-    x = layers.Concatenate()([layers.GlobalAveragePooling2D()(x), layers.GlobalMaxPool2D()(x)])
+
+    # I think average pooling should be done on conv layer just before max pooling layer,
+    # because why 2 pooling layers should be there?
+    indices = [2, 5, 10, 15, 20]
+    intermediate_features = [layers.GlobalAveragePooling2D()(base.get_layer(index=i).output) for i in indices ]
+
+    x = layers.Concatenate()(intermediate_features)
     x = top(x)
 
-    return Model(inp, x)
+    return Model(base.input, x)
 
 
 def main():
