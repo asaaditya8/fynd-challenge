@@ -35,7 +35,7 @@ class Learner:
         :return: None
         """
         lr_callback = LRFinder(num_samples, batch_size=BATCH_SIZE,
-                               minimum_lr=1e-3, maximum_lr=1e1,
+                               minimum_lr=1e-4, maximum_lr=1,
                                lr_scale='exp', save_dir=os.path.abspath(lr_dir))
 
         # Ensure that number of epochs = 1 when calling fit()
