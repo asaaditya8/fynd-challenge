@@ -10,7 +10,7 @@ from src.data.make_dataset import TEST_SIZE, N_VAL
 from src.data.loader import get_data, BATCH_SIZE
 from src.kerasonecycle.clr import OneCycleLR, LRFinder
 
-PATIENCE = 10
+PATIENCE = 4
 MAX_LR = 0.01
 N_SAMPLES = int(3370 * (1 - TEST_SIZE))
 num_samples = (N_SAMPLES // BATCH_SIZE) * BATCH_SIZE
