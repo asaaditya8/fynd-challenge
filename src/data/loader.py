@@ -9,8 +9,13 @@ def get_data(inp_dir):
     var_dict ={}
     for v in var_list:
         if v == 'train':
-            var_dict[v] = ImageDataGenerator(brightness_range=(0,0.1),
-                                             channel_shift_range=0.1,
+            var_dict[v] = ImageDataGenerator(rotation_range = 30,
+                                             width_shift_range= 0.1,
+                                             height_shift_range= 0.1,
+                                             shear_range= 0.1,
+                                             zoom_range= 0.1,
+                                             horizontal_flip= True,
+                                             fill_mode= "nearest",
                 preprocessing_function=preprocess_input).flow_from_directory(
                                                   os.path.join(os.path.abspath(inp_dir), v),
                                                   batch_size=BATCH_SIZE,

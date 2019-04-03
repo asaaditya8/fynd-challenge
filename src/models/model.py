@@ -11,7 +11,7 @@ def create_top(num_classes:int):
     """
     top = Sequential([
         layers.BatchNormalization(input_shape=(64+128+256+512+512,)),
-        layers.Dense(512, use_bias=True),
+        layers.Dense(512, use_bias=False),
         layers.Activation('relu'),
         layers.BatchNormalization(),
         layers.Dropout(0.5),
